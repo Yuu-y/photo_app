@@ -1,0 +1,16 @@
+%p= link_to "ログアウト", logout_path, data: { turbo_method: "delete" }
+
+%h1 写真一覧
+
+%p= link_to "MyTweetAppと連携", oauth_new_path
+%p= link_to "写真アップロード画面", photos_new_path, method: :get
+
+.flex-list
+  - @photos.each do |photo|
+    %div.mr-2
+      %p= photo.title
+      %p=image_tag photo.image
+      - if session[:access_token].present?
+        = button_to 'ツイートする', photos_upload_to_app_path(id: photo.id)
+
+
